@@ -1,26 +1,20 @@
 <template>
   <div class="wrapper-content wrapper-content--fixed">
-    <promo />
-    <intro title="My lasts post:" />
+    <intro title="My posts:" />
 
     <!-- posts -->
     <postsList :posts="posts" />
-    <contacts />
   </div>
 </template>
 
 <script>
-import promo from "../components/Promo";
-import intro from "../components/UI/Intro";
-import postsList from "../components/Blog/PostsList";
-import contacts from "../components/Contacts";
+import intro from "@/components/UI/Intro";
+import postsList from "@/components/Blog/PostsList";
 
 export default {
   components: {
-    promo,
     intro,
-    postsList,
-    contacts
+    postsList
   },
   data() {
     return {
