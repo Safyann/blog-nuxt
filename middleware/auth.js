@@ -1,3 +1,1 @@
-export default function(contex) {
-  console.log(contex);
-}
+export default function(contex) {}
