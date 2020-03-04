@@ -1,21 +1,14 @@
 <template>
   <div class="wrapper-content wrapper-content--fixed">
-    <intro title="My posts:" />
+    <Intro title="My posts:" />
 
     <!-- posts -->
-    <postsList :posts="posts" />
+    <PostsList :posts="posts" />
   </div>
 </template>
 
 <script>
-import intro from "@/components/UI/Intro";
-import postsList from "@/components/Blog/PostsList";
-
 export default {
-  components: {
-    intro,
-    postsList
-  },
   data() {
     return {
       posts: [

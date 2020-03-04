@@ -1,10 +1,13 @@
 <template>
   <div class="control">
-    <label><slot /></label>
+    <label>
+      <slot />
+    </label>
     <input
       v-bind="$attrs"
       :value="value"
       :type="type"
+      :required="required"
       @input="$emit('input', $event.target.value)"
     />
   </div>
@@ -20,6 +23,10 @@ export default {
     type: {
       type: String,
       default: "text"
+    },
+    required: {
+      type: Boolean,
+      default: true
     }
   }
 };

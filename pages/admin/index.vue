@@ -1,23 +1,11 @@
 <template>
-  <div class="wrapper-content wrapper-content--fixed">
-    <promo />
-    <Intro title="My lasts post:" />
-
-    <!-- posts -->
-    <PostsList :posts="posts" />
-    <contacts />
-  </div>
+  <!-- posts -->
+  <PostsList :admin="true" :posts="posts" />
 </template>
 
 <script>
-import promo from "../components/Promo";
-import contacts from "../components/Contacts";
-
 export default {
-  components: {
-    promo,
-    contacts
-  },
+  layout: "admin",
   data() {
     return {
       posts: [

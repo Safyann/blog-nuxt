@@ -20,18 +20,7 @@
 </template>
 
 <script>
-import AppButton from "@/components/UI/Controls/Button";
-import AppInput from "@/components/UI/Controls/Input";
-import AppTextarea from "@/components/UI/Controls/Textarea";
-import Message from "@/components/UI/Message";
-
 export default {
-  components: {
-    AppButton,
-    AppInput,
-    AppTextarea,
-    Message
-  },
   data() {
     return {
       comment: {
