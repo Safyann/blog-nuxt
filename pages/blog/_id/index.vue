@@ -2,7 +2,7 @@
   <div class="wrapper-content wrapper-content--fixed">
     <post :post="post" />
     <comments :comments="comments" />
-    <newComment />
+    <newComment :postId="$route.params.id" />
   </div>
 </template>
 
@@ -11,35 +11,49 @@ import post from "@/components/Blog/Post";
 import newComment from "@/components/Comments/NewComment";
 import comments from "@/components/Comments/Comments";
 
+import axios from "axios";
+
 export default {
   components: {
     post,
     comments,
     newComment
   },
-  data() {
+  async asyncData(context) {
+    let [post, comments] = await Promise.all([
+      axios.get(
+        `https://blog-nuxt-c4d58.firebaseio.com/posts/${context.params.id}.json`
+      ),
+      axios.get(`https://blog-nuxt-c4d58.firebaseio.com/comments.json`)
+    ]);
+
+    // let commentsArray = [],
+    //   commentsArrayRes = [];
+
+    // Object.keys(comments.data).forEach(key => {
+    //   commentsArray.push(comments.data[key]);
+    // });
+
+    // for (let i = 0; i < commentsArray.length; i++) {
+    //   if (
+    //     commentsArray[i].postId === context.params.id &&
+    //     commentsArray[i].publish
+    //   ) {
+    //     commentsArrayRes.push(commentsArray[i]);
+    //   }
+    // }
+
+    if (!comments.data) {
+      comments.data = {};
+    }
+
+    let commentsArrayRes = Object.values(comments.data).filter(
+      comment => comment.postId === context.params.id && comment.publish
+    );
+
     return {
-      post: {
-        id: 1,
-        title: "1 post",
-        descr:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia esse dolorem doloribus dolores, voluptatum recusandae ipsa aliquid vel voluptatem saepe, dolore repellat? Praesentium consectetur illum, natus voluptatum nesciunt necessitatibus veniam?",
-        content:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia esse dolorem doloribus dolores, voluptatum recusandae ipsa aliquid vel voluptatem saepe, dolore repellat? Praesentium consectetur illum, natus voluptatum nesciunt necessitatibus veniam? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia esse dolorem doloribus dolores, voluptatum recusandae ipsa aliquid vel voluptatem saepe, dolore repellat? Praesentium consectetur illum, natus voluptatum nesciunt necessitatibus veniam?",
-        img: "https://lawnuk.com/wp-content/uploads/2016/08/sprogs-dogs.jpg"
-      },
-      comments: [
-        {
-          name: "Alex",
-          text:
-            "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia esse dolorem doloribus dolores, voluptatum recusandae ipsa aliquid vel voluptatem saepe, dolore repellat? Praesentium consectetur illum, natus voluptatum nesciunt necessitatibus veniam?"
-        },
-        {
-          name: "Alena",
-          text:
-            "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia esse dolorem doloribus dolores, voluptatum recusandae ipsa aliquid vel voluptatem saepe, dolore repellat? Praesentium consectetur illum, natus voluptatum nesciunt necessitatibus veniam?"
-        }
-      ]
+      post: post.data,
+      comments: commentsArrayRes
     };
   }
 };

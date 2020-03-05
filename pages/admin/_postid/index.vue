@@ -4,28 +4,34 @@
 
 <script>
 import newPostForm from "@/components/Admin/NewPostForm";
+import axios from "axios";
+
 export default {
   components: {
     newPostForm
   },
   layout: "admin",
-  data() {
-    return {
-      post: {
-        id: 1,
-        title: "1 post",
-        descr:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia esse dolorem doloribus dolores, voluptatum recusandae ipsa aliquid vel voluptatem saepe, dolore repellat? Praesentium consectetur illum, natus voluptatum nesciunt necessitatibus veniam?",
-        content:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia esse dolorem doloribus dolores, voluptatum recusandae ipsa aliquid vel voluptatem saepe, dolore repellat? Praesentium consectetur illum, natus voluptatum nesciunt necessitatibus veniam? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia esse dolorem doloribus dolores, voluptatum recusandae ipsa aliquid vel voluptatem saepe, dolore repellat? Praesentium consectetur illum, natus voluptatum nesciunt necessitatibus veniam?",
-        img: "https://lawnuk.com/wp-content/uploads/2016/08/sprogs-dogs.jpg"
-      }
-    };
+  asyncData(contex) {
+    console.log(contex);
+    return axios
+      .get(
+        `https://blog-nuxt-c4d58.firebaseio.com/posts/${contex.params.postId}.json`
+      )
+      .then(res => {
+        return {
+          post: {
+            ...res.data,
+            id: contex.params.postId
+          }
+        };
+      })
+      .catch(e => contex.error(e));
   },
   methods: {
     onSubmit(post) {
-      console.log("Post editing!");
-      console.log(post);
+      this.$store.dispatch("editPost", post).then(() => {
+        this.$router.push("/admin");
+      });
     }
   }
 };
