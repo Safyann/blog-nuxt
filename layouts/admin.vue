@@ -1,16 +1,18 @@
 <template>
-  <div class="wrapper">
-    <Header />
-    <div class="wrapper-content wrapper-content--fixed">
-      <Intro title="Admin page">
-        <nuxt-link to="/admin" class="link linkWhite">Admin</nuxt-link>
-        <nuxt-link to="/admin/new-post" class="link linkWhite">New Post</nuxt-link>
-        <nuxt-link to="/admin/comments" class="link linkWhite">Comments</nuxt-link>
-        <span class="link linkWhite" @click="logoutUser">Logout</span>
-      </Intro>
-      <nuxt />
+  <client-only>
+    <div class="wrapper">
+      <Header />
+      <div class="wrapper-content wrapper-content--fixed">
+        <Intro title="Admin page">
+          <nuxt-link to="/admin" class="link linkWhite">Admin</nuxt-link>
+          <nuxt-link to="/admin/new-post" class="link linkWhite">New Post</nuxt-link>
+          <nuxt-link to="/admin/comments" class="link linkWhite">Comments</nuxt-link>
+          <span class="link linkWhite" @click="logoutUser">Logout</span>
+        </Intro>
+        <nuxt />
+      </div>
     </div>
-  </div>
+  </client-only>
 </template>
 
 <script>

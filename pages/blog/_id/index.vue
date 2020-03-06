@@ -19,6 +19,42 @@ export default {
     comments,
     newComment
   },
+  head() {
+    let title = this.post.title;
+    let descr = this.post.descr;
+    let type = "article";
+    let image = this.post.img;
+    return {
+      title: title,
+      meta: [
+        {
+          hid: "og:title",
+          name: "og:title",
+          content: title
+        },
+        {
+          hid: "description",
+          name: "description",
+          content: descr
+        },
+        {
+          hid: "og:description",
+          name: "og:description",
+          content: descr
+        },
+        {
+          hid: "og:type",
+          name: "og:type",
+          content: type
+        },
+        {
+          hid: "og:image",
+          name: "og:image",
+          content: image
+        }
+      ]
+    };
+  },
   async asyncData(context) {
     let [post, comments] = await Promise.all([
       axios.get(
