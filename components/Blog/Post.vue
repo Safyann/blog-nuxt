@@ -10,20 +10,26 @@
 
       <!-- body -->
       <div class="post-body">
-        <p>
-          {{ post.content }}
-        </p>
+        <div v-if="post.type === 'Markdown'" v v-html="compiledMarkdown"></div>
+        <div v-else v-html="post.content"></div>
       </div>
     </div>
   </section>
 </template>
 
 <script>
+import marked from "marked";
+
 export default {
   props: {
     post: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    compiledMarkdown() {
+      return marked(this.post.content, { sanitize: true });
     }
   }
 };

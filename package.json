@@ -12,9 +12,11 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "marked": "^0.8.0",
     "nuxt": "^2.0.0"
   },
   "devDependencies": {
+    "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
     "sass-loader": "^8.0.2"
   }
